@@ -7,7 +7,7 @@ import 'package:Marvel_App/screens/charchters_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../comic_image.dart';
+import '../widgets/comic_image.dart';
 import '../models/characters.dart';
 import '../models/items.dart';
 import '../widgets/Image_view_item.dart';

@@ -1,8 +1,8 @@
 import 'package:Marvel_App/screens/character_details_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'models/characters.dart';
-import 'widgets/Image_view_item.dart';
+import '../models/characters.dart';
+import 'Image_view_item.dart';
 
 class ComicImage extends StatelessWidget {
   String imagePath, imageExtension, name, len, pos;

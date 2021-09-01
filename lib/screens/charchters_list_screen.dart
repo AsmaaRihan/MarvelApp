@@ -118,7 +118,30 @@ class _CharchtersListSreenState extends State<CharchtersListSreen> {
                       ? Container(
                           color: Colors.blueGrey[800],
                         )
-                      : buildAllCharacters(context, state);
+                      : SingleChildScrollView(
+                          child: Container(
+                            color: Colors.blueGrey[800],
+                            height: MediaQuery.of(context).size.height,
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: state.superhero.results.length,
+                                itemBuilder: (ctx, i) {
+                                  return Container(
+                                    child: TextButton(
+                                        onPressed: () => marvelBloc.add(
+                                            GetCharacters(
+                                                path: "characters?id=",
+                                                searchWay: "ById",
+                                                searchedText:
+                                                    "${state.superhero.results[i].id}")),
+                                        child: CharacterCardItem(
+                                            state.superhero.results[i])),
+
+                                    // Text(superhero.results[i].comics.items[i].name),
+                                  );
+                                }),
+                          ),
+                        );
                 } else if (state is GetCharactersBySearchTermState) {
                   return buildSeachByTerm(context, state);
                 } else {
@@ -128,31 +151,6 @@ class _CharchtersListSreenState extends State<CharchtersListSreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  SingleChildScrollView buildAllCharacters(
-      BuildContext context, GetAllCharactersState state) {
-    return SingleChildScrollView(
-      child: Container(
-        color: Colors.blueGrey[800],
-        height: MediaQuery.of(context).size.height,
-        child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: state.superhero.results.length,
-            itemBuilder: (ctx, i) {
-              return Container(
-                child: TextButton(
-                    onPressed: () => marvelBloc.add(GetCharacters(
-                        path: "characters?id=",
-                        searchWay: "ById",
-                        searchedText: "${state.superhero.results[i].id}")),
-                    child: CharacterCardItem(state.superhero.results[i])),
-
-                // Text(superhero.results[i].comics.items[i].name),
-              );
-            }),
       ),
     );
   }

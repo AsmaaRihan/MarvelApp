@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import '/models/characters.dart';
 import '/repo/CharactersRepo.dart';
-import '/service_provide.dart';
+import '../services/service_provide.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';

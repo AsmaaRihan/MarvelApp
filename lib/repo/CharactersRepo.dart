@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:Marvel_App/models/characters.dart';
-import 'package:Marvel_App/service_provide.dart';
+import 'package:Marvel_App/services/service_provide.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:crypto/crypto.dart';

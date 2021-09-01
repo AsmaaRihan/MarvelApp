@@ -1,7 +1,8 @@
-import 'package:Marvel_App/character_details.dart';
+import 'package:Marvel_App/screens/character_details_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'models/characters.dart';
+import 'widgets/Image_view_item.dart';
 
 class ComicImage extends StatelessWidget {
   String imagePath, imageExtension, name, len, pos;
@@ -21,14 +22,11 @@ class ComicImage extends StatelessWidget {
         children: [
           Center(
             child: Container(
-              child: FadeInImage(
-                height: 450,
-                width: 300,
-                placeholder: AssetImage('assets/images/no-preview.jpeg'),
-                fit: BoxFit.fill,
-                image: NetworkImage('${this.imagePath}.${this.imageExtension}'),
-              ),
-            ),
+                child: ImageView(
+              h: 450,
+              w: 300,
+              path: '${this.imagePath}.${this.imageExtension}',
+            )),
           ),
           Positioned(
             top: 550,

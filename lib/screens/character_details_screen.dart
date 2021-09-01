@@ -3,12 +3,14 @@ import 'dart:ui';
 import 'package:Marvel_App/bloc/marvel_bloc.dart';
 import 'package:Marvel_App/main.dart';
 import 'package:Marvel_App/models/comics.dart';
+import 'package:Marvel_App/screens/charchters_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'comic_image.dart';
-import 'models/characters.dart';
-import 'models/items.dart';
+import '../comic_image.dart';
+import '../models/characters.dart';
+import '../models/items.dart';
+import '../widgets/Image_view_item.dart';
 
 // ignore: must_be_immutable
 class CharacterDetails extends StatefulWidget {
@@ -30,8 +32,6 @@ class _CharacterDetailsState extends State<CharacterDetails> {
     // TODO: implement initState
     super.initState();
     marvelBloc = MarvelBloc();
-    print("dnf");
-
     marvelBloc.add(GetComic(
         path: 'comics?id=',
         searchedText: '${superhero.results[0].id}',
@@ -64,13 +64,11 @@ class _CharacterDetailsState extends State<CharacterDetails> {
           Stack(
             children: [
               Container(
-                child: FadeInImage(
-                  height: 350,
-                  width: MediaQuery.of(context).size.width,
-                  placeholder: AssetImage('assets/images/loading.gif'),
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                      '${superhero.results[0].thumbnail.path}.${superhero.results[0].thumbnail.extension}'),
+                child: ImageView(
+                  h: 350,
+                  w: MediaQuery.of(context).size.width,
+                  path:
+                      '${superhero.results[0].thumbnail.path}.${superhero.results[0].thumbnail.extension}',
                 ),
               ),
               Positioned(
@@ -81,8 +79,8 @@ class _CharacterDetailsState extends State<CharacterDetails> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => MyApp()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => CharchtersListSreen()));
                     }),
               ),
             ],
@@ -209,24 +207,21 @@ Widget _buildComic(String imagePath, String imageExtension, String name,
       child: Column(
         children: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => ComicImage(
-                      imagePath: imagePath,
-                      imageExtension: imageExtension,
-                      name: name,
-                      superhero: superhero,
-                      len: len,
-                      pos: pos)));
-            },
-            child: FadeInImage(
-              height: 180,
-              width: 100,
-              placeholder: AssetImage('assets/images/no-preview.jpeg'),
-              fit: BoxFit.fill,
-              image: NetworkImage('${imagePath}.${imageExtension}'),
-            ),
-          ),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => ComicImage(
+                        imagePath: imagePath,
+                        imageExtension: imageExtension,
+                        name: name,
+                        superhero: superhero,
+                        len: len,
+                        pos: pos)));
+              },
+              child: ImageView(
+                h: 180,
+                w: 100,
+                path: '${imagePath}.${imageExtension}',
+              )),
           SizedBox(height: 5),
           Container(
             width: 100,

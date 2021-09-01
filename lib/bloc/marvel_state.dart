@@ -16,6 +16,7 @@ class GetAllCharactersState extends MarvelState {
   GetAllCharactersState({@required this.superhero});
 }
 
+//////taken
 class GetCharactersByNameState extends MarvelState {
   Data superhero;
   GetCharactersByNameState({this.superhero});

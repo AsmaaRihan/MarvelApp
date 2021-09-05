@@ -4,6 +4,9 @@ import 'package:Marvel_App/bloc/marvel_bloc.dart';
 import 'package:Marvel_App/main.dart';
 import 'package:Marvel_App/models/comics.dart';
 import 'package:Marvel_App/screens/charchters_list_screen.dart';
+import 'package:Marvel_App/widgets/detailedScreen/comicItem.dart';
+import 'package:Marvel_App/widgets/detailedScreen/title_subtitle.dart';
+import 'package:Marvel_App/widgets/detailedScreen/title_tem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -93,19 +96,29 @@ class _CharacterDetailsState extends State<CharacterDetails> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: 10),
-                  _buildContent("NAME", superhero.results[0].name),
+                  TitleSubtitle(
+                      title: "NAME", content: superhero.results[0].name),
                   SizedBox(height: 10),
-                  _buildContent(
-                      "Description", superhero.results[0].description),
-                  buildComicItem(superhero.results[0].comics, 'COMICS', context,
-                      superhero),
-                  buildComicItem(superhero.results[0].series, 'SERIES', context,
-                      superhero),
-                  buildComicItem(superhero.results[0].stories, 'STORIES',
-                      context, superhero),
-                  buildComicItem(superhero.results[0].events, 'EVENTS', context,
-                      superhero),
-                  _buildTtitle("RELATED LINKS"),
+                  TitleSubtitle(
+                      title: "Description",
+                      content: superhero.results[0].description),
+                  ComicItem(
+                      comicItem: superhero.results[0].comics,
+                      comicTitle: 'COMICS',
+                      superhero: superhero),
+                  ComicItem(
+                      comicItem: superhero.results[0].series,
+                      comicTitle: 'SERIES',
+                      superhero: superhero),
+                  ComicItem(
+                      comicItem: superhero.results[0].stories,
+                      comicTitle: 'STORIES',
+                      superhero: superhero),
+                  ComicItem(
+                      comicItem: superhero.results[0].events,
+                      comicTitle: 'EVENTS',
+                      superhero: superhero),
+                  TitleItem(title: "RELATED LINKS"),
                   SizedBox(height: 10),
                   _buildDetail("Detail", (Icons.arrow_forward_ios_outlined)),
                   SizedBox(height: 10),
@@ -121,118 +134,15 @@ class _CharacterDetailsState extends State<CharacterDetails> {
     );
   }
 
-  Column buildComicItem(Comics comicItem, String comicTitle,
-      BuildContext context, Data superhero) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildTtitle(comicTitle),
-        comicItem.items.length != 0
-            ? Container(
-                height: 250,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: comicItem.items.length,
-                    itemBuilder: (ctx, i) {
-                      return _buildComic(
-                          '${superhero.results[0].thumbnail.path}',
-                          '${superhero.results[0].thumbnail.extension}',
-                          comicItem.items[i].name,
-                          context,
-                          superhero,
-                          comicItem.items.length.toString(),
-                          i.toString());
-                    }),
-              )
-            : Container(),
-      ],
-    );
-  }
-}
-
-Column _buildTtitle(String title) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      SizedBox(height: 10),
+  Widget _buildDetail(String title, IconData iconData) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Text(title,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color: Colors.red,
-            fontSize: 12,
+            color: Colors.white,
+            fontSize: 16,
           )),
-    ],
-  );
-}
-
-Widget _buildDetail(String title, IconData iconData) {
-  return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    Text(title,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-        )),
-    Icon(iconData, color: Colors.white)
-  ]);
-}
-
-Widget _buildContent(String title, var content) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        title,
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.red, fontSize: 12),
-      ),
-      Container(
-        child: content != ''
-            ? Text(
-                content,
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              )
-            : Text(
-                'No description',
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
-      ),
-    ],
-  );
-}
-
-Widget _buildComic(String imagePath, String imageExtension, String name,
-    BuildContext context, Data superhero, String len, String pos) {
-  return Container(
-    child: Padding(
-      padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-      child: Column(
-        children: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => ComicImage(
-                        imagePath: imagePath,
-                        imageExtension: imageExtension,
-                        name: name,
-                        superhero: superhero,
-                        len: len,
-                        pos: pos)));
-              },
-              child: ImageView(
-                h: 180,
-                w: 100,
-                path: '${imagePath}.${imageExtension}',
-              )),
-          SizedBox(height: 5),
-          Container(
-            width: 100,
-            child: Text(
-              name,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 6, color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
+      Icon(iconData, color: Colors.white)
+    ]);
+  }
 }
